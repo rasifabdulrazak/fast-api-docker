@@ -6,6 +6,7 @@ services:
       context: .
     volumes:
       - ./app:/app
+      - fast-api-data:/vol/web
     ports:
       - "8000:8000" 
     expose:
@@ -13,3 +14,15 @@ services:
     command: >
       sh -c "uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
 
+  # db:
+  #   image: postgres:13-alpine
+  #   volumes:
+  #     - dev-db-data:/var/lib/postgresql/data
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "${DB_HOST_PORT}:5432"
+
+
+volumes:
+  fast-api-data:
