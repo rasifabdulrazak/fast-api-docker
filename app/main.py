@@ -1,4 +1,4 @@
-from fastapi import FastAPI,Request,Depends
+from fastapi import FastAPI,Request
 from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.staticfiles import StaticFiles
 
