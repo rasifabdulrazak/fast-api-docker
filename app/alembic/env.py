@@ -18,6 +18,26 @@ sys.path.append(BASE_DIR)
 # access to the values within the .ini file in use.
 config = context.config
 
+DATABASE=os.environ.get('DATABASE')
+DB_NAME=os.environ.get('DB_NAME')
+DB_USER=os.environ.get('DB_USER')
+DB_HOST=os.environ.get('DB_HOST')
+DB_PORT=os.environ.get('DB_PORT')
+DB_PASSWORD=os.environ.get('DB_PASSWORD')
+
+
+DATABASE_URL = f'{DATABASE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+print(DATABASE_URL,"111111111111")
+
+config.set_main_option('sqlalchemy.url', DATABASE_URL)
+
+from config.db import Base
+# add your model's MetaData object here
+# for 'autogenerate' support
+# from myapp import mymodel
+# target_metadata = mymodel.Base.metadata
+target_metadata = Base.metadata
+
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 if config.config_file_name is not None:

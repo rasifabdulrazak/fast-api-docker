@@ -1,6 +1,7 @@
 from fastapi import FastAPI,Request
 from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.staticfiles import StaticFiles
+from urllib.parse import urljoin  
 
 
 # ======Static files config===========
@@ -23,4 +24,7 @@ async def swagger_ui_html():
 
 @app.get("/") 
 def read_root(request:Request):
-    return {"Hello": f"{STATIC_URL}images/poonga.jpeg"} 
+    base_url = str(request.base_url)  # Convert to string
+    # Construct full URL for the image
+    full_image_url = urljoin(base_url, STATIC_URL + "images/poonga.jpeg")
+    return {"Hello": full_image_url} 

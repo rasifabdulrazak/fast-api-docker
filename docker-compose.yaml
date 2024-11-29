@@ -11,18 +11,24 @@ services:
       - "8000:8000" 
     expose:
       - 8000
+    env_file:
+      - .env
     command: >
-      sh -c "uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+      sh -c "alembic upgrade head &&
+             uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    # depends_on:
+    #   - db
 
-  # db:
-  #   image: postgres:13-alpine
-  #   volumes:
-  #     - dev-db-data:/var/lib/postgresql/data
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - "${DB_HOST_PORT}:5432"
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - dev-db-data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    ports:
+      - "54326:5432"
 
 
 volumes:
   fast-api-data:
+  dev-db-data:
